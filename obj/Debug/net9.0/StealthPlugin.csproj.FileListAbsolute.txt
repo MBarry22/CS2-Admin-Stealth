@@ -1,0 +1,4 @@
+C:\Users\keylo\Desktop\MP_Stealth\StealthPlugin\obj\Debug\net9.0\StealthPlugin.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\keylo\Desktop\MP_Stealth\StealthPlugin\obj\Debug\net9.0\StealthPlugin.AssemblyInfoInputs.cache
+C:\Users\keylo\Desktop\MP_Stealth\StealthPlugin\obj\Debug\net9.0\StealthPlugin.AssemblyInfo.cs
+C:\Users\keylo\Desktop\MP_Stealth\StealthPlugin\obj\Debug\net9.0\StealthPlugin.csproj.CoreCompileInputs.cache

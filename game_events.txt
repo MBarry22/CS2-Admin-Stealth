@@ -1,0 +1,1019 @@
+Game Events
+All the game events parsed from:
+
+csgo/pak01_dir.vpk/resource/game.gameevents
+csgo/pak01_dir.vpk/resource/mod.gameevents
+core/pak01_dir.vpk/resource/core.gameevents
+Note: An example of a GameEvent structure
+field type	field name	This field is both in .gameevents file and runtime dump
+field type	field name	This field isn't in the runtime dump
+List
+server_spawn
+Note: Send once a server starts
+string	hostname	public host name
+string	address	hostame, IP or DNS name
+short	port	server port
+string	game	game dir
+string	mapname	map name
+string	addonname	addon name
+long	maxplayers	max players
+string	os	WIN32, LINUX
+bool	dedicated	true if dedicated server
+bool	password	true if password protected
+server_pre_shutdown
+Note: Server is about to be shut down
+string	reason	reason why server is about to be shut down
+server_shutdown
+Note: Server shut down
+string	reason	reason why server was shut down
+server_message
+Note: A generic server message
+string	text	the message text
+server_cvar
+Note: A server console var has changed
+string	cvarname	cvar name, eg "mp_roundtime"
+string	cvarvalue	new cvar value
+player_activate
+playercontroller	userid	user ID on server
+player_connect_full
+Note: Player has sent final message in the connection sequence
+playercontroller	userid	user ID on server (unique on server)
+player_full_update
+playercontroller	userid	user ID on server
+short	count	Number of this full update
+player_connect
+Note: A new client connected
+string	name	player name
+playercontroller	userid	user ID on server (unique on server)
+string	networkid	player network (i.e steam) id
+uint64	xuid	steam id
+string	address	ip:port
+bool	bot	
+player_disconnect
+Note: A client was disconnected
+playercontroller	userid	user ID on server
+short	reason	see networkdisconnect enum protobuf
+string	name	player name
+string	networkid	player network (i.e steam) id
+uint64	xuid	steam id
+short	PlayerID	
+player_info
+Note: A player changed his name
+string	name	player name
+playercontroller	userid	user ID on server (unique on server)
+uint64	steamid	player network (i.e steam) id
+bool	bot	true if player is a AI bot
+player_spawn
+Note: Player spawned in game
+playercontroller	userid	
+strict_ehandle	userid_pawn	
+player_team
+Note: Player change his team. You can receive this on the client before the local player has updated the team field locally
+playercontroller	userid	player
+byte	team	team id
+byte	oldteam	old team id
+bool	disconnect	team change because player disconnects
+bool	silent	
+bool	isbot	true if player is a bot
+strict_ehandle	userid_pawn	
+local_player_team
+Note: Sent only on the client for the local player - happens only after a local players pawn team variable has been updated
+local_player_controller_team
+Note: Sent only on the client for the local player - happens only after the local players controller team variable has been updated
+player_changename
+playercontroller	userid	user ID on server
+string	oldname	players old (current) name
+string	newname	players new name
+player_hurt
+playercontroller	userid	player index who was hurt
+playercontroller	attacker	player index who attacked
+byte	health	remaining health points
+byte	armor	remaining armor points
+string	weapon	weapon name attacker used, if not the world
+short	dmg_health	damage done to health
+byte	dmg_armor	damage done to armor
+byte	hitgroup	hitgroup that was damaged
+strict_ehandle	userid_pawn	
+strict_ehandle	attacker_pawn	
+player_chat
+Note: A public player chat
+bool	teamonly	true if team only chat
+short	userid	chatting player
+string	text	chat text
+local_player_pawn_changed
+teamplay_broadcast_audio
+Note: Emits a sound to everyone on a team
+byte	team	unique team id
+string	sound	name of the sound to emit
+finale_start
+short	rushes	
+player_stats_updated
+bool	forceupload	
+user_data_downloaded
+Note: Fired when achievements/stats are downloaded from Steam or XBox Live
+ragdoll_dissolved
+long	entindex	
+team_info
+Note: Info about team
+byte	teamid	unique team id
+string	teamname	team name eg "Team Blue"
+team_score
+Note: Team score changed
+byte	teamid	team id
+short	score	total team score
+hltv_cameraman
+Note: A spectator/player is a cameraman
+playercontroller	userid	camera man entity index
+hltv_chase
+Note: Shot of a single entity
+playercontroller	target1	primary traget index
+playercontroller	target2	secondary traget index or 0
+short	distance	camera distance
+short	theta	view angle horizontal
+short	phi	view angle vertical
+byte	inertia	camera inertia
+byte	ineye	diretcor suggests to show ineye
+hltv_rank_camera
+Note: A camera ranking
+byte	index	fixed camera index
+float	rank	ranking, how interesting is this camera view
+playercontroller	target	best/closest target entity
+hltv_rank_entity
+Note: An entity ranking
+playercontroller	userid	player slot
+float	rank	ranking, how interesting is this entity to view
+playercontroller	target	best/closest target entity
+hltv_fixed
+Note: Show from fixed view
+long	posx	camera position in world
+long	posy	
+long	posz	
+short	theta	camera angles
+short	phi	
+short	offset	
+float	fov	
+playercontroller	target	follow this player
+hltv_message
+Note: A HLTV message send by moderators
+string	text	
+hltv_status
+Note: General HLTV status
+long	clients	number of HLTV spectators
+long	slots	number of HLTV slots
+short	proxies	number of HLTV proxies
+string	master	disptach master IP:port
+hltv_title
+string	text	
+hltv_chat
+Note: A HLTV chat msg sent by spectators
+string	text	
+uint64	steamID	steam id
+hltv_versioninfo
+long	version	
+hltv_replay
+long	delay	number of seconds in killer replay delay
+long	reason	reason for replay (ReplayEventType_t)
+demo_start
+1	local	Event is not networked to clients
+local	dota_combatlog_list	CSVCMsgList_GameEvents that are combat log events
+local	dota_hero_chase_list	CSVCMsgList_GameEvents
+local	dota_pick_hero_list	CSVCMsgList_GameEvents
+demo_stop
+demo_skip
+1	local	Event is not networked to clients
+long	playback_tick	current playback tick
+long	skipto_tick	tick we're going to
+local	user_message_list	CSVCMsgList_UserMessages
+local	dota_hero_chase_list	CSVCMsgList_GameEvents
+map_shutdown
+map_transition
+hostname_changed
+string	hostname	
+difficulty_changed
+short	newDifficulty	
+short	oldDifficulty	
+string	strDifficulty	new difficulty as string
+game_message
+Note: A message send by game logic to everyone
+byte	target	0 = console, 1 = HUD
+string	text	the message text
+game_newmap
+Note: Send when new map is completely loaded
+string	mapname	map name
+round_start
+long	timelimit	round time limit in seconds
+long	fraglimit	frag limit in seconds
+string	objective	round objective
+warmup_end
+round_end
+byte	winner	winner team/user i
+byte	reason	reson why team won
+string	message	end round message
+byte	legacy	server-generated legacy value
+short	player_count	total number of players alive at the end of round, used for statistics gathering, computed on the server in the event client is in replay when receiving this message
+byte	nomusic	if set, don't play round end music, because action is still on-going
+round_start_pre_entity
+round_start_post_nav
+round_freeze_end
+teamplay_round_start
+Note: Round restart
+bool	full_reset	is this a full reset of the map
+player_death
+Note: A game event, name may be 32 characters long
+playercontroller	userid	user who died
+playercontroller	attacker	player who killed
+playercontroller	assister	player who assisted in the kill
+bool	assistedflash	assister helped with a flash
+string	weapon	weapon name killer used
+string	weapon_itemid	inventory item id of weapon killer used
+string	weapon_fauxitemid	faux item id of weapon killer used
+string	weapon_originalowner_xuid	
+bool	headshot	singals a headshot
+short	dominated	did killer dominate victim with this kill
+short	revenge	did killer get revenge on victim with this kill
+short	wipe	is the kill resulting in squad wipe
+short	penetrated	number of objects shot penetrated before killing target
+bool	noreplay	if replay data is unavailable, this will be present and set to false
+bool	noscope	kill happened without a scope, used for death notice icon
+bool	thrusmoke	hitscan weapon went through smoke grenade
+bool	attackerblind	attacker was blind from flashbang
+float	distance	distance to victim in meters
+strict_ehandle	userid_pawn	
+strict_ehandle	attacker_pawn	
+strict_ehandle	assister_pawn	
+short	dmg_health	damage done to health
+byte	dmg_armor	damage done to armor
+byte	hitgroup	hitgroup that was damaged
+bool	attackerinair	attacker was in midair
+player_footstep
+playercontroller	userid	
+strict_ehandle	userid_pawn	
+player_hintmessage
+string	hintmessage	localizable string of a hint
+break_breakable
+long	entindex	
+player_pawn	userid	
+byte	material	BREAK_GLASS, BREAK_WOOD, etc
+strict_ehandle	userid_pawn	
+break_prop
+long	entindex	
+player_pawn	userid	
+strict_ehandle	userid_pawn	
+entity_killed
+long	entindex_killed	
+long	entindex_attacker	
+long	entindex_inflictor	
+long	damagebits	
+door_close
+player_pawn	userid	Who closed the door
+bool	checkpoint	Is the door a checkpoint door
+strict_ehandle	userid_pawn	
+vote_started
+string	issue	
+string	param1	
+byte	team	
+long	initiator	entity id of the player who initiated the vote
+vote_failed
+byte	team	
+vote_passed
+string	details	
+string	param1	
+byte	team	
+vote_changed
+byte	vote_option1	
+byte	vote_option2	
+byte	vote_option3	
+byte	vote_option4	
+byte	vote_option5	
+byte	potentialVotes	
+vote_cast_yes
+byte	team	
+long	entityid	entity id of the voter
+vote_cast_no
+byte	team	
+long	entityid	entity id of the voter
+achievement_event
+string	achievement_name	non-localized name of achievement
+short	cur_val	# of steps toward achievement
+short	max_val	total # of steps in achievement
+achievement_earned
+playercontroller	player	entindex of the player
+short	achievement	achievement ID
+achievement_write_failed
+Note: Used for a notification message when an achievement fails to write
+bonus_updated
+short	numadvanced	
+short	numbronze	
+short	numsilver	
+short	numgold	
+spec_target_updated
+playercontroller	userid	spectating player
+long	target	ehandle of the target
+strict_ehandle	userid_pawn	
+spec_mode_updated
+playercontroller	userid	entindex of the player
+entity_visible
+playercontroller	userid	The player who sees the entity
+short	subject	Entindex of the entity they see
+string	classname	Classname of the entity they see
+string	entityname	name of the entity they see
+gameinstructor_draw
+gameinstructor_nodraw
+flare_ignite_npc
+long	entindex	entity ignited
+helicopter_grenade_punt_miss
+physgun_pickup
+long	target	entity picked up
+inventory_updated
+cart_updated
+store_pricesheet_updated
+item_schema_initialized
+drop_rate_modified
+event_ticket_modified
+gc_connected
+instructor_start_lesson
+playercontroller	userid	The player who this lesson is intended for
+string	hint_name	Name of the lesson to start. Must match instructor_lesson.txt
+long	hint_target	entity id that the hint should display at. Leave empty if controller target
+byte	vr_movement_type	
+bool	vr_single_controller	
+byte	vr_controller_type	
+instructor_close_lesson
+playercontroller	userid	The player who this lesson is intended for
+string	hint_name	Name of the lesson to start. Must match instructor_lesson.txt
+instructor_server_hint_create
+Note: Create a hint using data supplied entirely by the server/map. Intended for hints to smooth playtests before content is ready to make the hint unneccessary. NOT INTENDED AS A SHIPPABLE CRUTCH
+playercontroller	userid	user ID of the player that triggered the hint
+string	hint_name	what to name the hint. For referencing it again later (e.g. a kill command for the hint instead of a timeout)
+string	hint_replace_key	type name so that messages of the same type will replace each other
+long	hint_target	entity id that the hint should display at
+playercontroller	hint_activator_userid	userid id of the activator
+short	hint_timeout	how long in seconds until the hint automatically times out, 0 = never
+string	hint_icon_onscreen	the hint icon to use when the hint is onscreen. e.g. "icon_alert_red"
+string	hint_icon_offscreen	the hint icon to use when the hint is offscreen. e.g. "icon_alert"
+string	hint_caption	the hint caption. e.g. "#ThisIsDangerous"
+string	hint_activator_caption	the hint caption that only the activator sees e.g. "#YouPushedItGood"
+string	hint_color	the hint color in "r,g,b" format where each component is 0-255
+float	hint_icon_offset	how far on the z axis to offset the hint from entity origin
+float	hint_range	range before the hint is culled
+long	hint_flags	hint flags
+string	hint_binding	bindings to use when use_binding is the onscreen icon
+string	hint_gamepad_binding	gamepad bindings to use when use_binding is the onscreen icon
+bool	hint_allow_nodraw_target	if false, the hint will dissappear if the target entity is invisible
+bool	hint_nooffscreen	if true, the hint will not show when outside the player view
+bool	hint_forcecaption	if true, the hint caption will show even if the hint is occluded
+bool	hint_local_player_only	if true, only the local player will see the hint
+clientside_lesson_closed
+string	lesson_name	
+dynamic_shadow_light_changed
+gameui_hidden
+items_gifted
+playercontroller	player	entity used by player
+long	itemdef	
+short	numgifts	
+long	giftidx	
+long	accountid	
+player_score
+Note: Players scores changed
+playercontroller	userid	user ID on server
+short	kills	# of kills
+short	deaths	# of deaths
+short	score	total game score
+player_shoot
+Note: Player shoot his weapon
+playercontroller	userid	user ID on server
+byte	weapon	weapon ID
+byte	mode	weapon mode
+strict_ehandle	userid_pawn	
+game_init
+Note: Sent when a new game is started
+game_start
+Note: A new game starts
+long	roundslimit	max round
+long	timelimit	time limit
+long	fraglimit	frag limit
+string	objective	round objective
+game_end
+Note: A game ended
+byte	winner	winner team/user id
+round_announce_match_point
+round_announce_final
+round_announce_last_round_half
+round_announce_match_start
+round_announce_warmup
+round_end_upload_stats
+round_officially_ended
+round_time_warning
+ugc_map_info_received
+uint64	published_file_id	
+ugc_map_unsubscribed
+uint64	published_file_id	
+ugc_map_download_error
+uint64	published_file_id	
+long	error_code	
+ugc_file_download_finished
+uint64	hcontent	id of this specific content (may be image or map)
+ugc_file_download_start
+uint64	hcontent	id of this specific content (may be image or map)
+uint64	published_file_id	id of the associated content package
+begin_new_match
+Note: Fired when a match ends or is restarted
+dm_bonus_weapon_start
+short	time	The length of time that this bonus lasts
+short	Pos	Loadout position of the bonus weapon
+survival_announce_phase
+short	phase	The phase #
+broken_breakable
+long	entindex	
+player_pawn	userid	
+byte	material	BREAK_GLASS, BREAK_WOOD, etc
+strict_ehandle	userid_pawn	
+player_decal
+player_pawn	userid	
+strict_ehandle	userid_pawn	
+set_instructor_group_enabled
+string	group	
+short	enabled	
+instructor_server_hint_stop
+Note: Destroys a server/map created hint
+string	hint_name	The hint to stop. Will stop ALL hints with this name
+read_game_titledata
+Note: Read user titledata from profile
+short	controllerId	Controller id of user
+write_game_titledata
+Note: Write user titledata in profile
+short	controllerId	Controller id of user
+reset_game_titledata
+Note: Reset user titledata; do not automatically write profile
+short	controllerId	Controller id of user
+weaponhud_selection
+playercontroller	userid	Player who this event applies to
+byte	mode	EWeaponHudSelectionMode (switch / pickup / drop)
+long	entindex	Weapon entity index
+strict_ehandle	userid_pawn	
+vote_ended
+vote_cast
+byte	vote_option	which option the player voted on
+short	team	
+playercontroller	userid	player who voted
+vote_options
+byte	count	Number of options - up to MAX_VOTE_OPTIONS
+string	option1	
+string	option2	
+string	option3	
+string	option4	
+string	option5	
+endmatch_mapvote_selecting_map
+byte	count	Number of "ties"
+byte	slot1	
+byte	slot2	
+byte	slot3	
+byte	slot4	
+byte	slot5	
+byte	slot6	
+byte	slot7	
+byte	slot8	
+byte	slot9	
+byte	slot10	
+endmatch_cmm_start_reveal_items
+client_loadout_changed
+add_player_sonar_icon
+playercontroller	userid	
+float	pos_x	
+float	pos_y	
+float	pos_z	
+add_bullet_hit_marker
+playercontroller	userid	
+short	bone	
+short	pos_x	
+short	pos_y	
+short	pos_z	
+short	ang_x	
+short	ang_y	
+short	ang_z	
+short	start_x	
+short	start_y	
+short	start_z	
+bool	hit	
+other_death
+short	otherid	other entity ID who died
+string	othertype	other entity type
+short	attacker	user ID who killed
+string	weapon	weapon name killer used
+string	weapon_itemid	inventory item id of weapon killer used
+string	weapon_fauxitemid	faux item id of weapon killer used
+string	weapon_originalowner_xuid	
+bool	headshot	singals a headshot
+short	penetrated	number of objects shot penetrated before killing target
+bool	noscope	kill happened without a scope, used for death notice icon
+bool	thrusmoke	hitscan weapon went through smoke grenade
+bool	attackerblind	attacker was blind from flashbang
+item_purchase
+playercontroller	userid	
+short	team	
+short	loadout	
+string	weapon	
+bomb_beginplant
+playercontroller	userid	player who is planting the bomb
+short	site	bombsite index
+strict_ehandle	userid_pawn	
+bomb_abortplant
+playercontroller	userid	player who is planting the bomb
+short	site	bombsite index
+strict_ehandle	userid_pawn	
+bomb_planted
+playercontroller	userid	player who planted the bomb
+short	site	bombsite index
+strict_ehandle	userid_pawn	
+bomb_defused
+playercontroller	userid	player who defused the bomb
+short	site	bombsite index
+strict_ehandle	userid_pawn	
+bomb_exploded
+playercontroller	userid	player who planted the bomb
+short	site	bombsite index
+strict_ehandle	userid_pawn	
+bomb_dropped
+playercontroller	userid	player who dropped the bomb
+long	entindex	
+strict_ehandle	userid_pawn	
+bomb_pickup
+player_pawn	userid	player pawn who picked up the bomb
+strict_ehandle	userid_pawn	
+defuser_dropped
+long	entityid	defuser's entity ID
+defuser_pickup
+long	entityid	defuser's entity ID
+playercontroller	userid	player who picked up the defuser
+strict_ehandle	userid_pawn	
+announce_phase_end
+cs_intermission
+bomb_begindefuse
+playercontroller	userid	player who is defusing
+bool	haskit	
+strict_ehandle	userid_pawn	
+bomb_abortdefuse
+playercontroller	userid	player who was defusing
+strict_ehandle	userid_pawn	
+hostage_follows
+playercontroller	userid	player who touched the hostage
+short	hostage	hostage entity index
+strict_ehandle	userid_pawn	
+hostage_hurt
+playercontroller	userid	player who hurt the hostage
+short	hostage	hostage entity index
+strict_ehandle	userid_pawn	
+hostage_killed
+playercontroller	userid	player who killed the hostage
+short	hostage	hostage entity index
+strict_ehandle	userid_pawn	
+hostage_rescued
+playercontroller	userid	player who rescued the hostage
+short	hostage	hostage entity index
+short	site	rescue site index
+strict_ehandle	userid_pawn	
+hostage_stops_following
+playercontroller	userid	player who rescued the hostage
+short	hostage	hostage entity index
+strict_ehandle	userid_pawn	
+hostage_rescued_all
+hostage_call_for_help
+short	hostage	hostage entity index
+vip_escaped
+playercontroller	userid	player who was the VIP
+vip_killed
+playercontroller	userid	player who was the VIP
+playercontroller	attacker	user ID who killed the VIP
+player_radio
+playercontroller	userid	
+short	slot	
+strict_ehandle	userid_pawn	
+bomb_beep
+long	entindex	c4 entity
+weapon_fire
+playercontroller	userid	
+string	weapon	weapon name used
+bool	silenced	is weapon silenced
+strict_ehandle	userid_pawn	
+weapon_fire_on_empty
+playercontroller	userid	
+string	weapon	weapon name used
+strict_ehandle	userid_pawn	
+grenade_thrown
+playercontroller	userid	
+string	weapon	weapon name used
+strict_ehandle	userid_pawn	
+weapon_outofammo
+playercontroller	userid	
+strict_ehandle	userid_pawn	
+weapon_reload
+playercontroller	userid	
+strict_ehandle	userid_pawn	
+weapon_zoom
+playercontroller	userid	
+strict_ehandle	userid_pawn	
+silencer_detach
+playercontroller	userid	
+strict_ehandle	userid_pawn	
+inspect_weapon
+playercontroller	userid	
+strict_ehandle	userid_pawn	
+weapon_zoom_rifle
+Note: Exists for the game instructor to let it know when the player zoomed in with a regular rifle. Different from the above weapon_zoom because we don't use this event to notify bots
+playercontroller	userid	
+strict_ehandle	userid_pawn	
+player_spawned
+playercontroller	userid	
+bool	inrestart	true if restart is pending
+strict_ehandle	userid_pawn	
+item_pickup
+playercontroller	userid	
+string	item	either a weapon such as 'tmp' or 'hegrenade', or an item such as 'nvgs'
+bool	silent	
+long	defindex	
+item_pickup_slerp
+playercontroller	userid	
+short	index	
+short	behavior	
+item_pickup_failed
+playercontroller	userid	
+string	item	
+short	reason	
+short	limit	
+item_remove
+playercontroller	userid	
+string	item	either a weapon such as 'tmp' or 'hegrenade', or an item such as 'nvgs'
+long	defindex	
+ammo_pickup
+playercontroller	userid	
+string	item	either a weapon such as 'tmp' or 'hegrenade', or an item such as 'nvgs'
+long	index	the weapon entindex
+item_equip
+playercontroller	userid	
+string	item	either a weapon such as 'tmp' or 'hegrenade', or an item such as 'nvgs'
+long	defindex	
+bool	canzoom	
+bool	hassilencer	
+bool	issilenced	
+bool	hastracers	
+short	weptype	
+bool	ispainted	
+enter_buyzone
+playercontroller	userid	
+bool	canbuy	
+exit_buyzone
+playercontroller	userid	
+bool	canbuy	
+buytime_ended
+enter_bombzone
+playercontroller	userid	
+bool	hasbomb	
+bool	isplanted	
+exit_bombzone
+playercontroller	userid	
+bool	hasbomb	
+bool	isplanted	
+enter_rescue_zone
+playercontroller	userid	
+exit_rescue_zone
+playercontroller	userid	
+silencer_off
+playercontroller	userid	
+silencer_on
+playercontroller	userid	
+buymenu_open
+playercontroller	userid	
+buymenu_close
+playercontroller	userid	
+round_prestart
+Note: Sent before all other round restart actions
+round_poststart
+Note: Sent after all other round restart actions
+grenade_bounce
+playercontroller	userid	
+strict_ehandle	userid_pawn	
+hegrenade_detonate
+playercontroller	userid	
+short	entityid	
+float	x	
+float	y	
+float	z	
+strict_ehandle	userid_pawn	
+flashbang_detonate
+playercontroller	userid	
+short	entityid	
+float	x	
+float	y	
+float	z	
+strict_ehandle	userid_pawn	
+smokegrenade_detonate
+playercontroller	userid	
+short	entityid	
+float	x	
+float	y	
+float	z	
+strict_ehandle	userid_pawn	
+smokegrenade_expired
+playercontroller	userid	
+short	entityid	
+float	x	
+float	y	
+float	z	
+strict_ehandle	userid_pawn	
+molotov_detonate
+playercontroller	userid	
+float	x	
+float	y	
+float	z	
+strict_ehandle	userid_pawn	
+decoy_detonate
+playercontroller	userid	
+short	entityid	
+float	x	
+float	y	
+float	z	
+strict_ehandle	userid_pawn	
+decoy_started
+player_pawn	userid	
+short	entityid	
+float	x	
+float	y	
+float	z	
+strict_ehandle	userid_pawn	
+tagrenade_detonate
+playercontroller	userid	
+short	entityid	
+float	x	
+float	y	
+float	z	
+inferno_startburn
+short	entityid	
+float	x	
+float	y	
+float	z	
+inferno_expire
+short	entityid	
+float	x	
+float	y	
+float	z	
+inferno_extinguish
+short	entityid	
+float	x	
+float	y	
+float	z	
+decoy_firing
+playercontroller	userid	
+short	entityid	
+float	x	
+float	y	
+float	z	
+strict_ehandle	userid_pawn	
+bullet_impact
+playercontroller	userid	
+float	x	
+float	y	
+float	z	
+strict_ehandle	userid_pawn	
+player_jump
+playercontroller	userid	
+player_blind
+playercontroller	userid	
+playercontroller	attacker	user ID who threw the flash
+short	entityid	the flashbang going off
+float	blind_duration	
+player_falldamage
+playercontroller	userid	
+float	damage	
+strict_ehandle	userid_pawn	
+door_moving
+playercontroller	userid	
+long	entindex	
+strict_ehandle	userid_pawn	
+mb_input_lock_success
+mb_input_lock_cancel
+nav_blocked
+long	area	
+bool	blocked	
+nav_generate
+achievement_info_loaded
+hltv_changed_mode
+long	oldmode	
+long	newmode	
+long	obs_target	
+cs_game_disconnected
+cs_round_final_beep
+cs_round_start_beep
+cs_win_panel_round
+bool	show_timer_defend	
+bool	show_timer_attack	
+short	timer_time	
+byte	final_event	define in cs_gamerules.h
+string	funfact_token	
+playercontroller	funfact_player	
+long	funfact_data1	
+long	funfact_data2	
+long	funfact_data3	
+cs_win_panel_match
+cs_match_end_restart
+cs_pre_restart
+show_deathpanel
+playercontroller	victim	endindex of the one who was killed
+long	killer	entindex of the killer entity
+playercontroller	killer_controller	
+short	hits_taken	
+short	damage_taken	
+short	hits_given	
+short	damage_given	
+strict_ehandle	victim_pawn	
+hide_deathpanel
+player_avenged_teammate
+playercontroller	avenger_id	
+playercontroller	avenged_player_id	
+achievement_earned_local
+short	achievement	achievement ID
+short	splitscreenplayer	splitscreen ID
+repost_xbox_achievements
+short	splitscreenplayer	splitscreen ID
+match_end_conditions
+long	frags	
+long	max_rounds	
+long	win_rounds	
+long	time	
+round_mvp
+playercontroller	userid	
+short	reason	
+long	value	
+long	musickitmvps	
+byte	nomusic	
+long	musickitid	
+show_survival_respawn_status
+string	loc_token	
+long	duration	
+playercontroller	userid	
+strict_ehandle	userid_pawn	
+client_disconnect
+gg_killed_enemy
+playercontroller	victimid	user ID who died
+playercontroller	attackerid	user ID who killed
+short	dominated	did killer dominate victim with this kill
+short	revenge	did killer get revenge on victim with this kill
+bool	bonus	did killer kill with a bonus weapon?
+switch_team
+short	numPlayers	number of active players on both T and CT
+short	numSpectators	number of spectators
+short	avg_rank	average rank of human players
+short	numTSlotsFree	
+short	numCTSlotsFree	
+write_profile_data
+trial_time_expired
+Note: Fired when a player runs out of time in trial mode
+playercontroller	userid	player whose time has expired
+update_matchmaking_stats
+Note: Fired when it's time to update matchmaking data at the end of a round.
+player_reset_vote
+playercontroller	userid	
+bool	vote	
+enable_restart_voting
+bool	enable	
+sfuievent
+string	action	
+string	data	
+byte	slot	
+start_vote
+playercontroller	userid	
+byte	type	
+short	vote_parameter	
+player_given_c4
+playercontroller	userid	user ID who received the c4
+tr_player_flashbanged
+playercontroller	userid	user ID of the player banged
+tr_mark_complete
+short	complete	
+tr_mark_best_time
+long	time	
+tr_exit_hint_trigger
+bot_takeover
+playercontroller	userid	
+playercontroller	botid	
+strict_ehandle	userid_pawn	
+tr_show_finish_msgbox
+tr_show_exit_msgbox
+jointeam_failed
+playercontroller	userid	
+byte	reason	0 = team_full
+teamchange_pending
+playercontroller	userid	
+byte	toteam	
+material_default_complete
+cs_prev_next_spectator
+bool	next	
+nextlevel_changed
+Note: A game event, name may be 32 characters long
+string	nextlevel	
+string	mapgroup	
+string	skirmishmode	
+seasoncoin_levelup
+playercontroller	userid	
+short	category	
+short	rank	
+tournament_reward
+long	defindex	
+long	totalrewards	
+long	accountid	
+start_halftime
+ammo_refill
+playercontroller	userid	
+bool	success	
+parachute_pickup
+playercontroller	userid	
+parachute_deploy
+playercontroller	userid	
+dronegun_attack
+playercontroller	userid	
+drone_dispatched
+playercontroller	userid	
+short	priority	
+short	drone_dispatched	
+loot_crate_visible
+playercontroller	userid	player entindex
+short	subject	crate entindex
+string	type	type of crate (metal, wood, or paradrop)
+loot_crate_opened
+playercontroller	userid	player entindex
+string	type	type of crate (metal, wood, or paradrop)
+open_crate_instr
+playercontroller	userid	player entindex
+short	subject	crate entindex
+string	type	type of crate (metal, wood, or paradrop)
+smoke_beacon_paradrop
+playercontroller	userid	
+short	paradrop	
+survival_paradrop_spawn
+short	entityid	
+survival_paradrop_break
+short	entityid	
+drone_cargo_detached
+playercontroller	userid	
+short	cargo	
+bool	delivered	
+drone_above_roof
+playercontroller	userid	
+short	cargo	
+choppers_incoming_warning
+bool	global	
+firstbombs_incoming_warning
+bool	global	
+dz_item_interaction
+playercontroller	userid	player entindex
+short	subject	crate entindex
+string	type	type of crate (metal, wood, or paradrop)
+survival_teammate_respawn
+playercontroller	userid	
+survival_no_respawns_warning
+playercontroller	userid	
+survival_no_respawns_final
+playercontroller	userid	
+player_ping
+playercontroller	userid	
+short	entityid	
+float	x	
+float	y	
+float	z	
+bool	urgent	
+strict_ehandle	userid_pawn	
+player_ping_stop
+short	entityid	
+player_sound
+playercontroller	userid	
+long	radius	
+float	duration	
+bool	step	
+strict_ehandle	userid_pawn	
+guardian_wave_restart
+team_intro_start
+team_intro_end
+bullet_flight_resolution
+playercontroller	userid	
+strict_ehandle	userid_pawn	
+short	pos_x	
+short	pos_y	
+short	pos_z	
+short	ang_x	
+short	ang_y	
+short	ang_z	
+short	start_x	
+short	start_y	
+short	start_z	
+door_break
+long	entindex	
+long	dmgstate	
+door_closed
+strict_ehandle	userid_pawn	
+long	entindex	
+door_open
+strict_ehandle	userid_pawn	
+long	entindex	
+game_phase_changed
+short	new_phase	
+hltv_replay_status
+long	reason	

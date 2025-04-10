@@ -1,0 +1,12 @@
+C:\Users\keylo\Desktop\MP_Stealth\StealthPlugin\bin\Debug\net8.0\StealthPlugin.deps.json
+C:\Users\keylo\Desktop\MP_Stealth\StealthPlugin\bin\Debug\net8.0\StealthPlugin.dll
+C:\Users\keylo\Desktop\MP_Stealth\StealthPlugin\bin\Debug\net8.0\StealthPlugin.pdb
+C:\Users\keylo\Desktop\MP_Stealth\StealthPlugin\obj\Debug\net8.0\StealthPlugin.csproj.AssemblyReference.cache
+C:\Users\keylo\Desktop\MP_Stealth\StealthPlugin\obj\Debug\net8.0\StealthPlugin.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\keylo\Desktop\MP_Stealth\StealthPlugin\obj\Debug\net8.0\StealthPlugin.AssemblyInfoInputs.cache
+C:\Users\keylo\Desktop\MP_Stealth\StealthPlugin\obj\Debug\net8.0\StealthPlugin.AssemblyInfo.cs
+C:\Users\keylo\Desktop\MP_Stealth\StealthPlugin\obj\Debug\net8.0\StealthPlugin.csproj.CoreCompileInputs.cache
+C:\Users\keylo\Desktop\MP_Stealth\StealthPlugin\obj\Debug\net8.0\StealthPlugin.dll
+C:\Users\keylo\Desktop\MP_Stealth\StealthPlugin\obj\Debug\net8.0\refint\StealthPlugin.dll
+C:\Users\keylo\Desktop\MP_Stealth\StealthPlugin\obj\Debug\net8.0\StealthPlugin.pdb
+C:\Users\keylo\Desktop\MP_Stealth\StealthPlugin\obj\Debug\net8.0\ref\StealthPlugin.dll
